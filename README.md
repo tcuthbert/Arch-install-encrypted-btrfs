@@ -192,7 +192,7 @@ vim /etc/pacman.d/mirrorlist
 ##### This command can be customized with additional packages (**btrfs-progs is necessary to let the system boot up from btrfs partition !**)
 
 ```bash
-pacstrap /mnt/ base base-devel git btrfs-progs efibootmgr linux linux-headers linux-firmware mkinitcpio dhcpcd bash-completion sudo
+pacstrap -K /mnt/ base base-devel git btrfs-progs efibootmgr linux linux-headers linux-firmware mkinitcpio bash-completion sudo sbctl neovim
 ```
 
 #### Generate fstab:
