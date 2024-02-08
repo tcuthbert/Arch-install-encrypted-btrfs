@@ -227,18 +227,9 @@ hwclock --systohc --utc
 myhostname
 ```
 
-#### Edit vconsole in `/etc/vconsole.conf`
-
-```text
-KEYMAP=pl  
-FONT=Lat2-Terminus16.psfu.gz  
-FONT_MAP=8859-2  
-
-```
-
 #### Setup locale
 
-##### Uncomment pl\_PL.UTF-8 in /etc/locale.gen and then run:
+##### Uncomment en\_US.UTF-8 in /etc/locale.gen and then run:
 
 ```bash
 locale-gen
@@ -248,12 +239,12 @@ locale-gen
 
 ```text
 LANG=en_US.UTF-8
-LC_COLLATE=pl_PL.UTF-8
-LC_MEASUREMENT=pl_PL.UTF-8
-LC_MONETARY=pl_PL.UTF-8
-LC_NUMERIC=pl_PL.UTF-8
-LC_TIME=pl_PL.UTF-8
-
+LC_COLLATE=en_US.UTF-8
+LC_MEASUREMENT=en_US.UTF-8
+LC_MONETARY=en_US.UTF-8
+LC_NUMERIC=en_US.UTF-8
+LC_TIME=en_US.UTF-8
+LC_C=en_US.UTF-8
 ```
 
 #### Hosts in `/etc/hosts`
