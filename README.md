@@ -36,7 +36,7 @@ startplasma-wayland
 #### Set key map
 
 ```bash
-loadkeys pl  
+loadkeys us  
 ```
 
 #### Update clock
@@ -48,7 +48,7 @@ timedatectl set-ntp true
 #### Optionally (recommended) update mirrorlist
 
 ```bash
-reflector --country 'Poland' --age 24 --verbose --sort rate --save /etc/pacman.d/mirrorlist  
+reflector --country 'Australia' --age 24 --verbose --sort rate --save /etc/pacman.d/mirrorlist  
 ```
 
 ## 2. Prepare Disk
@@ -92,15 +92,15 @@ mkfs.vfat -F32 /dev/sdX1
 #### Grub have some kind of support for luks2, but not entirely, so for more fail-safe setup use luks1
 
 ```bash
-cryptsetup -c=aes-xts-plain64 --key-size=512 --hash=sha512 --iter-time=3000 --pbkdf=pbkdf2 --use-random luksFormat --type=luks1 /dev/sdX2  
+cryptsetup -c=aes-xts-plain64 --key-size=512 --hash=sha512 --iter-time=3000 --pbkdf=pbkdf2 --use-random luksFormat --type=luks2 /dev/sdX2  
 
-cryptsetup luksOpen /dev/sdX2 MainPart 
+cryptsetup luksOpen /dev/sdX2 root 
 ```
 
 ### Formatting as btrfs now when it is already encrypted
 
 ```bash
-mkfs.btrfs -L "Arch Linux" /dev/mapper/MainPart  
+mkfs.btrfs -L "Arch Linux" /dev/mapper/root  
 ```
 
 ##### ---------------- end of encryption ------------------------
@@ -115,7 +115,7 @@ mkfs.btrfs -L "Arch Linux" /dev/sdX2
 
 #### Mount partition to be able to create btrfs subvolumes
 
-##### If using encryption, change **/dev/sdX2** to **/dev/mapper/MainPart**:
+##### If using encryption, change **/dev/sdX2** to **/dev/mapper/root**:
 
 ```bash
 mount /dev/sdX2 /mnt  
@@ -147,7 +147,7 @@ umount /mnt
 
 ```
 
-#### If using encryption, change **/dev/sdX2** to **/dev/mapper/MainPart**:
+#### If using encryption, change **/dev/sdX2** to **/dev/mapper/root**:
 
 ```bash
 mount -o defaults,noatime,discard,ssd,subvol=@ /dev/sdX2 /mnt  
@@ -165,7 +165,7 @@ mkdir /mnt/efi # for EFI partition /dev/sdX1
 
 #### Discard and ssd options and are for ssd disks only
 
-#### If using encryption, change **/dev/sdX2** to **/dev/mapper/MainPart**
+#### If using encryption, change **/dev/sdX2** to **/dev/mapper/root**
 
 ```bash
 mount -o defaults,noatime,discard,ssd,subvol=@home /dev/sdX2 /mnt/home
@@ -395,7 +395,7 @@ blkid
 ##### edit `/etc/default/grub`
 
 ```text
-GRUB_CMDLINE_LINUX="cryptdevice=UUID=<device-UUID>:MainPart:allow-discards"  
+GRUB_CMDLINE_LINUX="cryptdevice=UUID=<device-UUID>:root:allow-discards"  
 ```
 
 ##### allow-discards is only for ssd to let trim work with encryption enabled
